@@ -1,4 +1,4 @@
-import { test } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 
 test.beforeEach(async ({ page }) => {
 	await page.goto('http://localhost:4200/');
@@ -65,6 +65,51 @@ test.describe('Interaction with web elements', () => {
 
 		// LEAST PREFERABLE APPROACH, AVOID
 		await page.locator('nb-card').nth(3).getByRole('button').click();
+	});
+
+	test('Parent elements', async ({ page }) => {
+		// Q: How to find a parent nb-card from a child which has text "Using the Grid"?
+		// A: Provide a second locator and filter the output of first locator 
+		// #1 - By text
+		await page.locator('nb-card', {hasText: 'Using the Grid'}).getByRole('textbox', {name: "Email"}).click();
+		
+		// #2 - By another locator
+		await page.locator('nb-card', {has: page.locator('#inputEmail1')}).getByRole('textbox', {name: "Email"}).click();
+
+		// #3 - dedicated PW filter method
+		await page.locator('nb-card').filter({hasText: "Basic form"}).getByRole('textbox', {name: "Email"}).click();
+		await page.locator('nb-card').filter({has: page.locator('.status-danger')}).getByRole('textbox', {name: "Password"}).click();
+
+		// Q: Why use filter if we can use built-in?
+		// A:If you want to use user-facing locators, they can't use built-in, only the dedicated method. You can also chain multiple filters.
+
+		// #4 - Chaining multiple filters to create an unique output
+		await page.locator('nb-card').filter({has: page.locator('nb-checkbox')}).filter({hasText: "Sign in"}).getByRole('textbox', {name: "Email"}).click();
+
+		// #5 - NOT RECOMMENDED - XPath, go one level up on DOM
+		await page.locator(':text-is("Using the Grid")').locator('..').getByRole('textbox', {name: "Email"}).click();
+	});
+
+	test.describe('Reusing locators', () => {
+		test.skip('Performing multiple actions with copy pasting', async ({ page }) => {
+			await page.locator('nb-card').filter({hasText: "Basic form"}).getByRole('textbox', {name: "Email"}).fill('test@test.com');
+			await page.locator('nb-card').filter({hasText: "Basic form"}).getByRole('textbox', {name: "Password"}).fill('welcome123');
+			await page.locator('nb-card').filter({hasText: "Basic form"}).getByRole('button').click();
+		});
+
+		test('Simplifying', async ({ page }) =>{
+			// assign locators to constants to create abstraction and less copy-pasted code
+			const basicForm = page.locator('nb-card').filter({hasText: "Basic form"});
+			const emailField = basicForm.getByRole('textbox', {name: "Email"});
+			const passwordField = basicForm.getByRole('textbox', {name: "Password"});
+
+			await emailField.fill('test@test.com');
+			await passwordField.fill('welcome123');
+			await basicForm.locator('nb-checkbox').click();
+			await basicForm.getByRole('button').click();
+
+			await expect(emailField).toHaveValue('test@test.com');
+		});
 	});
 });
 
