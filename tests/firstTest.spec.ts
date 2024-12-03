@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { first } from 'rxjs-compat/operator/first';
 
 test.beforeEach(async ({ page }) => {
 	await page.goto('http://localhost:4200/');
@@ -111,5 +112,63 @@ test.describe('Interaction with web elements', () => {
 			await expect(emailField).toHaveValue('test@test.com');
 		});
 	});
+
+	test.describe('Extracting values', () => {
+		test('Single value', async ({ page }) => {
+			const basicForm = page.locator('nb-card').filter({hasText: "Basic form"});
+			const buttonText = await basicForm.locator('button').textContent();
+			// Then assert if matches the expected
+			expect(buttonText).toEqual('Submit');
+		});
+
+		test('Multiple values', async ({ page }) => {
+			const radioLocator = page.locator('nb-radio');
+			const allRadioButtonsLabels = await radioLocator.allTextContents();
+			expect(allRadioButtonsLabels).toContain("Option 1");
+			
+			// for this one I'd get the field like Option 1 and compare with Option 1, which doesn't really make sense...
+			// Another strategy would be to get first element of list and expect to be Option 1, then would be good 
+			const firstRadioButtonLabel = await radioLocator.first().textContent();
+			expect(firstRadioButtonLabel).toEqual("Option 1");
+			// worked!!
+		});
+
+		test('Input value', async ({ page }) => {
+			const basicForm = page.locator('nb-card').filter({hasText: "Basic form"});
+			const emailField = basicForm.getByRole('textbox', {name: "Email"});
+			await emailField.fill('test@test.com');
+			const emailValue = await emailField.inputValue();
+			expect(emailValue).toEqual('test@test.com');
+		});
+
+		test('Attribute value', async ({ page }) => {
+			const basicForm = page.locator('nb-card').filter({hasText: "Basic form"});
+			const emailField = basicForm.getByRole('textbox', {name: "Email"});
+
+			const placeholderValue = await emailField.getAttribute('placeholder');
+			expect(placeholderValue).toEqual('Email');
+		});
+	});
+
+	test.describe('Assertions', () => {
+		test('General assertions', async ({ page }) => {
+			const value = 5;
+			expect(value).toEqual(5)
+			// compare left value with right value
+
+			const basicFormButton = page.locator('nb-card').filter({hasText: "Basic form"}).locator('button');
+
+			const basicFormButtonText = await basicFormButton.textContent();
+			expect(basicFormButtonText).toEqual('Submit');
+			// general assertions don't wait
+		});
+
+		test('Locator assertions', async ({ page }) => {
+			const basicFormButton = page.locator('nb-card').filter({hasText: "Basic form"}).locator('button');
+			// instead of providing exact value, we give the locator
+			await expect(basicFormButton).toHaveText('Submit');
+			// this needs await, can wait for 5 seconds
+		});
+	})
 });
 
