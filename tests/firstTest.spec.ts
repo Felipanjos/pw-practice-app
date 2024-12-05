@@ -169,6 +169,13 @@ test.describe('Interaction with web elements', () => {
 			await expect(basicFormButton).toHaveText('Submit');
 			// this needs await, can wait for 5 seconds
 		});
-	})
+
+		test('Soft assertions', async ({ page }) => {
+			// when test can continue assertion even if test failed - NOT GOOD PRACTICE
+			const basicFormButton = page.locator('nb-card').filter({hasText: "Basic form"}).locator('button');
+			await expect.soft(basicFormButton).toHaveText('Submit5');
+			await basicFormButton.click();
+		});
+	});
 });
 
