@@ -151,17 +151,17 @@ test.describe('Interaction with web elements', () => {
 	});
 
 	test.describe('Assertions', () => {
-		test('General assertions', async ({ page }) => {
-			const value = 5;
-			expect(value).toEqual(5)
-			// compare left value with right value
+	test('General assertions', async ({ page }) => {
+		const value = 5;
+		expect(value).toEqual(5)
+		// compare left value with right value
 
-			const basicFormButton = page.locator('nb-card').filter({hasText: "Basic form"}).locator('button');
+		const basicFormButton = page.locator('nb-card').filter({hasText: "Basic form"}).locator('button');
 
-			const basicFormButtonText = await basicFormButton.textContent();
-			expect(basicFormButtonText).toEqual('Submit');
-			// general assertions don't wait
-		});
+		const basicFormButtonText = await basicFormButton.textContent();
+		expect(basicFormButtonText).toEqual('Submit');
+		// general assertions don't wait
+	});
 
 		test('Locator assertions', async ({ page }) => {
 			const basicFormButton = page.locator('nb-card').filter({hasText: "Basic form"}).locator('button');
