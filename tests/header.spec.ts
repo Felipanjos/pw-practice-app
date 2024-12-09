@@ -7,12 +7,10 @@ test.beforeEach( async ({page}) => {
 });
 
 test.describe('Theme selector dropdown', () => {
-    test('Assert theme list', async ({ page }) => {
+    test('Assert one theme on the list', async ({ page }) => {
+        // USE GET BY ROLE LIST(UL) & LISTITEM(LI) IS RECOMMENDED WHEN POSSIBLE
         const themeSelectorDropdown = page.locator('ngx-header nb-select');
         await themeSelectorDropdown.click();
-
-        // ul tag - page.getByRole('list');
-        // li tag - page.getByRole('listItem');
 
         const optionList = page.locator('nb-option-list nb-option');
         await expect(optionList).toContainText(["Light", "Dark", "Cosmic", "Corporate"]);
@@ -22,7 +20,30 @@ test.describe('Theme selector dropdown', () => {
         const header = page.locator('nb-layout-header');
         await expect(header).toHaveCSS('background-color', 'rgb(50, 50, 89)');
 
-        const bodyClassList = await page.locator('body').getAttribute('class');
-        expect(bodyClassList).toContain('nb-theme-cosmic');
+        await expect(page.locator('body')).toHaveClass(/nb-theme-cosmic/);
+    });
+
+    test('Assert multiple themes', async ({ page }) => {
+        const themeSelectorDropdown = page.locator('ngx-header nb-select');
+        await themeSelectorDropdown.click();
+        const optionList = page.locator('nb-option-list nb-option');
+        const header = page.locator('nb-layout-header');
+
+        const colors = {
+            "Light": "rgb(255, 255, 255)",
+            "Dark": "rgb(34, 43, 69)",
+            "Cosmic": "rgb(50, 50, 89)",
+            "Corporate": "rgb(255, 255, 255)"
+        }
+
+        for(const color in colors){
+            await optionList.filter({ hasText: color }).click();
+            await expect(header).toHaveCSS('background-color', colors[color]);
+            const pattern = new RegExp(`nb-theme-${color === "Light" ? "default" : color.toLocaleLowerCase()}`);
+            
+            await expect(page.locator('body')).toHaveClass(pattern);
+            if(color != "Corporate")
+                await themeSelectorDropdown.click();
+        }
     });
 });
