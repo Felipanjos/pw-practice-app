@@ -36,7 +36,7 @@ test.describe('Theme selector dropdown', () => {
             "Corporate": "rgb(255, 255, 255)"
         }
 
-        for(const color in colors){
+        for (const color in colors) {
             await optionList.filter({ hasText: color }).click();
             await expect(header).toHaveCSS('background-color', colors[color]);
             const pattern = new RegExp(`nb-theme-${color === "Light" ? "default" : color.toLocaleLowerCase()}`);
