@@ -11,7 +11,7 @@ test.beforeEach( async ({ page }) => {
 test.describe('Smart table', () => {
     test('Find row and field through text', async ({ page }) => {
         // Get row by text in this row
-        const targetRow = page.getByRole('row', { name: "twitter@outlook.com"} );
+        const targetRow = page.getByRole('row', { name: "twitter@outlook.com" });
         const ageInput = page.locator('input-editor').getByPlaceholder('Age');
 
         // Open edition and change the value in there 
