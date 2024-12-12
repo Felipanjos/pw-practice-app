@@ -8,7 +8,7 @@ test.beforeEach( async ({ page }) => {
 });
 
 test.describe('Dialog', () => {
-    test('something', async ({ page }) => {
+    test('Delete row and confirm dialog', async ({ page }) => {
         const targetMail = "mdo@gmail.com";
         const targetRow = page.getByRole('table').locator('tr', { hasText: targetMail });
 
