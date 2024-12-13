@@ -11,7 +11,7 @@ test.beforeEach( async ({ page }) => {
 test.describe('Smart table', () => {
     test('Find row and field through text', async ({ page }) => {
         // Get row by text in this row
-        const targetRow = page.getByRole('row', { name: "twitter@outlook.com" });
+        const targetRow = page.getByRole('row', { name: 'twitter@outlook.com' });
         const ageInput = page.locator('input-editor').getByPlaceholder('Age');
 
         // Open edition and change the value in there 
@@ -26,6 +26,17 @@ test.describe('Smart table', () => {
         const secondPage = tableNavigation.getByText('2');
 
         await secondPage.click();
-        await expect(secondPage).toContainText("current");
+        await expect(secondPage).toContainText('current');
+        
+        // const targetRowById = page.getByRole('row', { name: '11' }).filter({ has: page.locator('td').nth(1).getByText('11')}); 
+        // const targetRowById = page.locator('tr', { has: page.locator('td').nth(2).getByText('11')}); 
+        const targetRowById = page.getByRole('row').filter({ has: page.locator('td').nth(1).getByText('11') }); 
+        await targetRowById.locator('.nb-edit').click(); 
+        
+        const emailField = page.locator('input-editor').getByPlaceholder('E-mail');
+        await emailField.clear();
+        await emailField.fill('test@test.com');
+        await page.locator('.nb-checkmark').click();
+        await expect(targetRowById.locator('td').nth(5)).toHaveText('test@test.com');
     });
 }); 
