@@ -39,4 +39,24 @@ test.describe('Smart table', () => {
         await page.locator('.nb-checkmark').click();
         await expect(targetRowById.locator('td').nth(5)).toHaveText('test@test.com');
     });
+
+    test('Table\'s filter functionality', async ({ page }) => {   
+        const ages = ['20', '30', '40', '200'];
+        const ageInputField = page.getByPlaceholder('Age');
+
+        for(const age of ages){
+            await ageInputField.fill(age);
+            const rowsFilteredByAge = page.locator('tbody').getByRole('row');
+            await page.waitForTimeout(500);
+
+            if (age === '200')
+                await expect(page.getByRole('table')).toContainText('No data found');
+            else 
+                for (const row of await rowsFilteredByAge.all()){
+                    const lastCell = row.getByRole('cell').last();
+                    await expect(lastCell).toHaveText(age);
+                }
+            
+        };
+    });
 }); 
