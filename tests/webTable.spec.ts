@@ -1,5 +1,4 @@
 import { test, expect } from '@playwright/test'; 
-import { table } from 'console';
 
 test.beforeEach( async ({ page }) => {
     await page.goto('http://localhost:4200');
