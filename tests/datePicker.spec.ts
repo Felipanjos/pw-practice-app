@@ -17,7 +17,7 @@ test.describe('Common Datepicker Component', () => {
     // Utility function: Get the formatted date details
     const getTargetDateDetails = (daysInFuture: number) => {
       const date = new Date();
-      const getMonth = (length) => { return date.toLocaleString('en-US', { month: length}) };
+      const getMonth = (length: 'short' | 'long'): string => { return date.toLocaleString('en-US', { month: length}) };
       date.setDate(date.getDate() + daysInFuture);
 
       return {
