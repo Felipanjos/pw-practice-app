@@ -7,14 +7,16 @@ export class DatepickerPage {
     readonly nextMonthButtonSelector: Locator;
     readonly dayCellSelector: Locator;
     readonly formPickerInputField: Locator;
+    readonly rangePickerInputField: Locator;
     
     constructor( page: Page ){
         this.page = page;
         
         this.calendarMonthAndYearSelector = this.page.locator('nb-calendar-view-mode').getByRole('button');
         this.nextMonthButtonSelector = this.page.locator('button [data-name="chevron-right"]');
-        this.dayCellSelector = this.page.locator('nb-calendar-day-cell[class="day-cell ng-star-inserted"]');
+        this.dayCellSelector = this.page.locator('.day-cell.ng-star-inserted:not(.bounding-month)');
         this.formPickerInputField = this.page.getByPlaceholder('Form Picker');
+        this.rangePickerInputField = this.page.getByPlaceholder('Range Picker');
     }
 
     async selectCommonDatepickerDateFromToday(numberOfDaysFromToday: number): Promise<void> {
@@ -50,7 +52,12 @@ export class DatepickerPage {
         return `${targetMonthShort} ${targetDate}, ${targetYear}`;
     }
 
-    private async selectRangeDatepickerDateFromToday(numberOfDaysFromToday: number): Promise<void> {
+    async selectRangeDatepickerDateFromToday(startDayFromToday: number, endDayFromToday: number): Promise<void> {
+        await this.rangePickerInputField.click();
 
+        const expectedStartDate = await this.selectDateInTheCalendar(startDayFromToday);
+        const expectedEndDate = await this.selectDateInTheCalendar(endDayFromToday);
+
+        await expect(this.rangePickerInputField).toHaveValue(expectedStartDate + ' - ' + expectedEndDate);
     }
 }

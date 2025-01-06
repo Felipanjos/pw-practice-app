@@ -31,5 +31,5 @@ test('Datepicker E2E', async ({ page }) => {
     
     await navigateTo.datePickerPage();
     await onDatepickerPage.selectCommonDatepickerDateFromToday(300);
-    // await onDatepickerPage.selectRangeDatepickerDateFromToday(5);
+    await onDatepickerPage.selectRangeDatepickerDateFromToday(6, 15);
 });
