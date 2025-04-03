@@ -1,10 +1,10 @@
 import { test, expect } from '@playwright/test';
 
-test.beforeEach( async ({ page }) => {
-    await page.goto('http://localhost:4200');
-    await page.getByTitle('Forms').click();
-    await page.getByTitle('Datepicker').click();
-    await expect(page).toHaveURL('http://localhost:4200/pages/forms/datepicker');
+test.beforeEach(async ({ page }) => {
+  await page.goto('/');
+  await page.getByTitle('Forms').click();
+  await page.getByTitle('Datepicker').click();
+  await expect(page).toHaveURL('/pages/forms/datepicker');
 });
 
 test.describe('Common Datepicker Component', () => {
@@ -17,7 +17,9 @@ test.describe('Common Datepicker Component', () => {
     // Utility function: Get the formatted date details
     const getTargetDateDetails = (daysInFuture: number) => {
       const date = new Date();
-      const getMonth = (length: 'short' | 'long'): string => { return date.toLocaleString('en-US', { month: length}) };
+      const getMonth = (length: 'short' | 'long'): string => {
+        return date.toLocaleString('en-US', { month: length });
+      };
       date.setDate(date.getDate() + daysInFuture);
 
       return {
