@@ -59,7 +59,7 @@ export class DatepickerPage {
 
     const expectedStartDate = await this.selectDateInTheCalendar(startDayFromToday);
     const expectedEndDate = await this.selectDateInTheCalendar(endDayFromToday);
-    const dateToAssert = `${expectedStartDate} - ${expectedEndDate}}`;
+    const dateToAssert = `${expectedStartDate} - ${expectedEndDate}`;
 
     await expect(this.rangePickerInputField).toHaveValue(dateToAssert);
   }

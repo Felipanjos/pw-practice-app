@@ -7,7 +7,6 @@ export class FormLayoutsPage {
   readonly usingTheGridFormEmail: Locator;
   readonly usingTheGridFormPassword: Locator;
   readonly usingTheGridFormSubmit: Locator;
-  readonly usingTheGridRadioButtons: { [key: string]: Locator };
   //#endregion
 
   //#region Inline form
@@ -31,14 +30,6 @@ export class FormLayoutsPage {
     this.usingTheGridFormPassword = this.usingTheGridForm.getByRole('textbox', {
       name: 'Password',
     });
-    this.usingTheGridRadioButtons = {
-      'Option 1': this.usingTheGridForm.getByRole('radio', {
-        name: 'Option 1',
-      }),
-      'Option 2': this.usingTheGridForm.getByRole('radio', {
-        name: 'Option 2',
-      }),
-    };
     this.usingTheGridFormSubmit = this.usingTheGridForm.getByRole('button');
     //#endregion
 
@@ -55,15 +46,18 @@ export class FormLayoutsPage {
     //#endregion
   }
 
-  async submitUsingTheGridFormWithCredentialsAndSelectOption(
-    email: string,
-    password: string,
-    optionText: string,
-  ) {
+  /**
+   * Fills inline form with user details
+   * @param email - valid email for test user
+   * @param email - password for test user
+   * @param rememberMe - save session or not
+   */
+  async submitUsingTheGridFormWithCredentialsAndSelectOption(email: string, password: string, option: number) {
     await this.usingTheGridFormEmail.fill(email);
     await this.usingTheGridFormPassword.fill(password);
 
-    const radioButton = this.usingTheGridRadioButtons[optionText];
+    const radioButton = this.usingTheGridForm.getByRole('radio', { name: `${option}` });
+
     await radioButton.check({ force: true });
     await this.usingTheGridFormSubmit.click();
   }
@@ -74,11 +68,7 @@ export class FormLayoutsPage {
    * @param email - valid email for test user
    * @param rememberMe - save session or not
    */
-  async submitInlineFormWithNameEmailAndCheckbox(
-    name: string,
-    email: string,
-    rememberMe: boolean,
-  ) {
+  async submitInlineFormWithNameEmailAndCheckbox(name: string, email: string, rememberMe: boolean) {
     await this.inlineFormName.fill(name);
     await this.inlineFormEmail.fill(email);
 

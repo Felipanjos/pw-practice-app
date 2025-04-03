@@ -8,9 +8,7 @@ test.beforeEach(async ({ page }) => {
 
 test.describe('Input fields', () => {
   test('Using the Grid - Assert input fields', async ({ page }) => {
-    const usingTheGridEmailInput = page
-      .locator('nb-card', { hasText: 'Using the Grid' })
-      .getByRole('textbox', { name: 'Email' });
+    const usingTheGridEmailInput = page.locator('nb-card', { hasText: 'Using the Grid' }).getByRole('textbox', { name: 'Email' });
 
     await usingTheGridEmailInput.fill('test@test.com');
     await usingTheGridEmailInput.clear();
