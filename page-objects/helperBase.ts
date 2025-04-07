@@ -1,5 +1,6 @@
 import { Page } from '@playwright/test';
 import { faker } from '@faker-js/faker';
+import { RandomPerson } from './randomPerson';
 
 export class HelperBase {
   readonly page: Page;
@@ -12,14 +13,14 @@ export class HelperBase {
     await this.page.waitForTimeout(timeInSeconds * 1000);
   }
 
-  static generateRandomPerson() {
+  static generateRandomPerson(): RandomPerson {
     const randomPerson = {
       firstName: faker.person.firstName(),
       lastName: faker.person.lastName(),
       password: faker.internet.password(),
       email: null,
       fullName: null,
-      option: faker.number.int({min: 1, max: 2})
+      option: 'Option ' + faker.number.int({min: 1, max: 2})
     };
   
     randomPerson.email = faker.internet.email({
@@ -35,3 +36,5 @@ export class HelperBase {
     return randomPerson
   }
 }
+export { RandomPerson };
+
