@@ -1,6 +1,6 @@
 import { test } from '@playwright/test';
-import { PageManager } from './page-objects/pageManager';
-import { HelperBase } from './page-objects/helperBase';
+import { PageManager } from '../page-objects/pageManager';
+import { HelperBase } from '../page-objects/helperBase';
 import { faker } from '@faker-js/faker';
 
 test.beforeEach(async ({ page }) => {

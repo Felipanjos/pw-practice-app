@@ -20,21 +20,23 @@ export class HelperBase {
       password: faker.internet.password(),
       email: null,
       fullName: null,
-      option: 'Option ' + faker.number.int({min: 1, max: 2})
+      option: 'Option ' + faker.number.int({ min: 1, max: 2 }),
     };
-  
+
     randomPerson.email = faker.internet.email({
       firstName: randomPerson.firstName,
       lastName: randomPerson.lastName + faker.number.int(100),
       provider: '@test.com',
     });
-  
-    randomPerson.email = randomPerson.email.toLowerCase();
-  
-    randomPerson.fullName = faker.person.fullName({ firstName: randomPerson.firstName, lastName: randomPerson.lastName });
 
-    return randomPerson
+    randomPerson.email = randomPerson.email.toLowerCase();
+
+    randomPerson.fullName = faker.person.fullName({
+      firstName: randomPerson.firstName,
+      lastName: randomPerson.lastName,
+    });
+
+    return randomPerson;
   }
 }
 export { RandomPerson };
-
