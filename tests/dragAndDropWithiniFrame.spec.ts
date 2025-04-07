@@ -8,14 +8,14 @@ test.describe('Drag and drop', () => {
   test('Traditional approach', async ({ page }) => {
     const iframe = page.frameLocator('[rel-title="Photo Manager"] iframe');
 
-    await iframe.locator('li', { hasText: 'High Tatras 2' }).dragTo(iframe.locator('#trash'));
+    await iframe.getByRole('listitem').filter({ hasText: 'High Tatras 2' }).dragTo(iframe.locator('#trash'));
     await expect(iframe.locator('#trash li h5')).toHaveText('High Tatras 2');
   });
 
   test('More precise control', async ({ page }) => {
     const iframe = page.frameLocator('[rel-title="Photo Manager"] iframe');
 
-    await iframe.locator('li', { hasText: 'High Tatras 4' }).hover();
+    await iframe.getByRole('listitem').filter({ hasText: 'High Tatras 4' }).hover();
     await page.mouse.down();
     await iframe.locator('#trash').hover();
     await page.mouse.up();
