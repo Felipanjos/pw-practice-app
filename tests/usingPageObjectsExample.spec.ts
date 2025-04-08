@@ -21,7 +21,9 @@ test('Form Layouts E2E', async ({ page }) => {
   const person = HelperBase.generateRandomPerson();
 
   await pm.navigateTo().formLayoutsPage();
-  await pm.onFormLayoutsPage().submitUsingTheGridFormWithCredentialsAndSelectOption(person.email, person.password, person.option);
+  await pm
+    .onFormLayoutsPage()
+    .submitUsingTheGridFormWithCredentialsAndSelectOption(person.email, person.password, person.option);
   await pm.onFormLayoutsPage().submitInlineFormWithNameEmailAndCheckbox(person.fullName, person.email, true);
 });
 

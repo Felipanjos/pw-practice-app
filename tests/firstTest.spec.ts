@@ -105,8 +105,16 @@ test.describe('Interaction with web elements', () => {
 
   test.describe('Reusing locators', () => {
     test.skip('Performing multiple actions with copy pasting', async ({ page }) => {
-      await page.locator('nb-card').filter({ hasText: 'Basic form' }).getByRole('textbox', { name: 'Email' }).fill('test@test.com');
-      await page.locator('nb-card').filter({ hasText: 'Basic form' }).getByRole('textbox', { name: 'Password' }).fill('welcome123');
+      await page
+        .locator('nb-card')
+        .filter({ hasText: 'Basic form' })
+        .getByRole('textbox', { name: 'Email' })
+        .fill('test@test.com');
+      await page
+        .locator('nb-card')
+        .filter({ hasText: 'Basic form' })
+        .getByRole('textbox', { name: 'Password' })
+        .fill('welcome123');
       await page.locator('nb-card').filter({ hasText: 'Basic form' }).getByRole('button').click();
     });
 

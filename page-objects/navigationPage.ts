@@ -45,8 +45,7 @@ export class NavigationPage extends HelperBase {
 
   private async selectGroupMenuItem(groupMenuItemTitle: string) {
     const groupMenuItemLocator = this.page.getByTitle(groupMenuItemTitle);
-    const isExpanded =
-      (await groupMenuItemLocator.getAttribute('aria-expanded')) === 'true';
+    const isExpanded = (await groupMenuItemLocator.getAttribute('aria-expanded')) === 'true';
     if (!isExpanded) await groupMenuItemLocator.click();
   }
 }

@@ -6,4 +6,3 @@ export interface RandomPerson {
   fullName: string | null;
   option: string;
 }
-
