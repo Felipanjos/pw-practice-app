@@ -1,10 +1,10 @@
 import { test, expect } from '@playwright/test';
 
-test.beforeEach(async ({ page }) => {
-  await page.goto('https://www.globalsqa.com/demo-site/draganddrop/');
-});
-
 test.describe('Drag and drop', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('https://www.globalsqa.com/demo-site/draganddrop/');
+  });
+
   test('Traditional approach', async ({ page }) => {
     const iframe = page.frameLocator('[rel-title="Photo Manager"] iframe');
 
