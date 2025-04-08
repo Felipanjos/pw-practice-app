@@ -26,7 +26,7 @@ export class HelperBase {
     randomPerson.email = faker.internet.email({
       firstName: randomPerson.firstName,
       lastName: randomPerson.lastName + faker.number.int(100),
-      provider: '@test.com',
+      provider: 'test.com',
     });
 
     randomPerson.email = randomPerson.email.toLowerCase();

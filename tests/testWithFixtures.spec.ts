@@ -1,6 +1,6 @@
 import { test } from '../test-options';
 
-test('Form Layouts E2E', async ({ pageManager, randomPerson }) => {
+test('Form Layouts E2E', async ({ pageManager, formLayoutsPage, randomPerson }) => {
   await pageManager
     .onFormLayoutsPage()
     .submitUsingTheGridFormWithCredentialsAndSelectOption(

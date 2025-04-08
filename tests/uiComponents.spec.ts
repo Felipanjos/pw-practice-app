@@ -363,8 +363,6 @@ test.describe('Common Datepicker Component', () => {
     await expect(page).toHaveURL('/pages/forms/datepicker');
   });
 
-  // todo put utility functions into POM
-  // todo put locators into POM
   test('Navigate and select a future date', async ({ page }) => {
     // Selectors
     const calendarMonthYearSelector = page.locator('nb-calendar-view-mode');

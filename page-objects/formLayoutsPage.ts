@@ -47,6 +47,12 @@ export class FormLayoutsPage {
     //#endregion
   }
 
+  async goto() {
+    await this.page.goto('/');
+    await this.page.getByText('Forms').click();
+    await this.page.getByText('Form Layouts').click();
+  }
+
   /**
    * Fills inline form with user details
    * @param email - valid email for test user

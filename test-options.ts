@@ -1,6 +1,7 @@
 import { test as base } from '@playwright/test';
 import { PageManager } from './page-objects/pageManager';
-import { HelperBase, RandomPerson } from './page-objects/helperBase';
+import { HelperBase } from './page-objects/helperBase';
+import { RandomPerson } from './page-objects/randomPerson';
 
 export type TestOptions = {
   globalsQaURL: string;
@@ -12,19 +13,16 @@ export type TestOptions = {
 export const test = base.extend<TestOptions>({
   globalsQaURL: ['', { option: true }],
 
-  formLayoutsPage: async ({ page }, use) => {
-    await page.goto('/');
-    await page.getByText('Forms').click();
-    await page.getByText('Form Layouts').click();
+  formLayoutsPage: async ({ page, pageManager }, use) => {
+    pageManager.navigateTo().formLayoutsPage();
     await use('');
   },
 
-  pageManager: async ({ page, formLayoutsPage }, use) => {
-    const pm = new PageManager(page);
-    await use(pm);
+  pageManager: async ({ page }, use) => {
+    await use(new PageManager(page));
   },
 
-  randomPerson: async ({ page }, use) => {
+  randomPerson: async ({}, use) => {
     await use(HelperBase.generateRandomPerson());
-  }
+  },
 });
