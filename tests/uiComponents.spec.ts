@@ -157,7 +157,7 @@ test.describe('Tooltips', () => {
     await page.getByRole('button', { name: 'Top' }).hover();
     const tooltipBox = await tooltip.boundingBox();
 
-    await page.screenshot({ path: 'tooltip-test.png' });
+    await page.screenshot({ path: 'test-results/screenshots/tooltip-test.png' });
 
     expect(tooltipBox).not.toBeNull(); // Ensure it exists
     expect(tooltipBox!.y + tooltipBox!.height).toBeLessThan(buttonBox!.y); // Example for horizontal positioning
