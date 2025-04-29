@@ -62,6 +62,7 @@ export class NavigationPage {
   private async selectGroupMenuItem(groupMenuItemTitle: string) {
     this.gotoBaseURL();
     const groupMenuItemLocator = this.page.getByTitle(groupMenuItemTitle);
+    await groupMenuItemLocator.waitFor({ state: 'visible' });
     const isExpanded = (await groupMenuItemLocator.getAttribute('aria-expanded')) === 'true';
     if (!isExpanded) await groupMenuItemLocator.click();
   }

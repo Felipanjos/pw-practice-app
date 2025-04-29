@@ -7,7 +7,7 @@ test.beforeEach(async ({ page }) => {
   await page.goto('/');
 });
 
-test('Navigate to forms page', async ({ page }) => {
+test('Navigate to forms page @smoke', async ({ page }) => {
   const pm = new PageManager(page);
   await pm.navigateTo().formLayoutsPage();
   await pm.navigateTo().datePickerPage();
@@ -27,7 +27,7 @@ test('Form Layouts E2E', async ({ page }) => {
   await pm.onFormLayoutsPage().submitInlineFormWithNameEmailAndCheckbox(person.fullName, person.email, true);
 });
 
-test('Datepicker E2E', async ({ page }) => {
+test('Datepicker E2E @regression', async ({ page }) => {
   const pm = new PageManager(page);
   const numberOfDaysFromToday = faker.number.int(1500);
   const lowerRangeNumberOfDays = faker.number.int({ min: 1, max: 1500 });
