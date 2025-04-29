@@ -1,14 +1,10 @@
-import { test } from '../test-options';
+import { test } from '../fixtures/test-options';
 
-test('Form Layouts E2E', async ({ pageManager, formLayoutsPage, randomPerson }) => {
-  await pageManager
-    .onFormLayoutsPage()
-    .submitUsingTheGridFormWithCredentialsAndSelectOption(
-      randomPerson.email,
-      randomPerson.password,
-      randomPerson.option
-    );
-  await pageManager
-    .onFormLayoutsPage()
-    .submitInlineFormWithNameEmailAndCheckbox(randomPerson.fullName, randomPerson.email, true);
+test('Form Layouts E2E', async ({ formLayoutsPage, randomPerson }) => {
+  await formLayoutsPage.submitUsingTheGridFormWithCredentialsAndSelectOption(
+    randomPerson.email,
+    randomPerson.password,
+    randomPerson.option
+  );
+  await formLayoutsPage.submitInlineFormWithNameEmailAndCheckbox(randomPerson.fullName, randomPerson.email, true);
 });
