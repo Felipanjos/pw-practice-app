@@ -37,6 +37,7 @@ testem.log
 # e2e
 /e2e/*.js
 /e2e/*.map
+/tests-examples
 
 # System Files
 .DS_Store
@@ -51,5 +52,4 @@ node_modules/
 .prettierrc.json
 
 # Allure
-/allure-report
-/allure-results
+support/
